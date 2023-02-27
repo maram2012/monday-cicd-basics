@@ -1,10 +1,11 @@
 const math = ()=>{}
 
-math.add = (...args) => {
+// math.add = (...args) => {
+  math.add = (a, b) => {
     sum = 0
-    for (i=0; i< args.length; i++)
-      sum += args[i]
-    return sum
+    // for (i=0; i< args.length; i++)
+    //   sum += args[i]
+    return sum + a + b
 }
 
 math.subtract = (a, b) => {
