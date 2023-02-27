@@ -29,16 +29,17 @@ jobs:
 
   server-configuration:
     docker:
-      - image: mareimorsy/aws-node
+      - image: python:3.7-alpine3.11
 
     steps:
       - checkout
       - add_ssh_keys:
           fingerprints: ["3a:d3:c7:02:68:9d:89:6e:30:3f:70:af:3c:0d:b9:e4"]
-      # - run:
-      #     name: Install dependencies
-      #     command: |
-      #       apk add gzip openssh-client ansible
+      - run:
+          name: Install dependencies
+          command: |
+            apk add gzip openssh-client ansible
+            pip3 install awscli
       # - attach_workspace:
       #     # Must be absolute path or relative path from working_directory
       #     at: .
