@@ -35,13 +35,13 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints: ["3a:d3:c7:02:68:9d:89:6e:30:3f:70:af:3c:0d:b9:e4"]
-      - run:
-          name: Install dependencies
-          command: |
-            apk add gzip openssh-client ansible
-      - attach_workspace:
-          # Must be absolute path or relative path from working_directory
-          at: .
+      # - run:
+      #     name: Install dependencies
+      #     command: |
+      #       apk add gzip openssh-client ansible
+      # - attach_workspace:
+      #     # Must be absolute path or relative path from working_directory
+      #     at: .
       - run:
           name: Reading Inventory file
           command: |
