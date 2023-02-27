@@ -16,7 +16,6 @@ jobs:
           name: Configure server
           command: |
             yum install -y tar gzip
-            echo "[web]" > inventory.txt
             aws ec2 describe-instances --region us-east-1 --query 'Reservations[*].Instances[*].PublicIpAddress' --output text >> inventory.txt
 
       - persist_to_workspace:
@@ -30,7 +29,7 @@ jobs:
 
   server-configuration:
     docker:
-      - image: python:3.7-alpine3.11
+      - image: mareimorsy/aws-node
 
     steps:
       - checkout
@@ -50,6 +49,7 @@ jobs:
       - run:
           name: Configure Infrastructure
           command: |
+            aws ec2 describe-instances --region us-east-1 --query 'Reservations[*].Instances[*].PublicIpAddress' --output text >> inventory.txt
             ansible-playbook -i inventory.txt main.yml
       # - run:
       #     name: Install dependencies
@@ -62,7 +62,7 @@ jobs:
 workflows:
   welcome:
     jobs:
-      - provsion-infrastructure
-      - server-configuration:
-          requires: 
-            - provsion-infrastructure
+      # - provsion-infrastructure
+      - server-configuration
+          # requires: 
+          #   - provsion-infrastructure
