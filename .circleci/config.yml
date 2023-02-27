@@ -59,11 +59,25 @@ jobs:
 # 
             # aws ec2 describe-instances --region us-east-1 --query 'Reservations[*].Instances[*].PublicIpAddress' --output text >> inventory.txt
             # ansible-playbook -i inventory.txt main.yml
+  testing:
+    docker:
+      - image: node:alpine
+
+    steps:
+      - checkout
+      - run:
+          name: Test unit test
+          command: |
+            cd backend
+            npm i
+            npm run test
+          
 
 workflows:
   welcome:
     jobs:
       # - provsion-infrastructure
-      - server-configuration
+      # - server-configuration
+      - testing
           # requires: 
           #   - provsion-infrastructure
