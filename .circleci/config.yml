@@ -17,7 +17,8 @@ jobs:
           command: |
             yum install -y tar gzip
             echo "[web]" > inventory.txt
-            echo "hello" >> inventory.txt
+            aws ec2 describe-instances --region us-east-1 --query 'Reservations[*].Instances[*].PublicIpAddress' --output text >> inventory.txt
+
       - persist_to_workspace:
           # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
           # taken to be the root directory of the workspace.
@@ -33,13 +34,12 @@ jobs:
 
     steps:
       - checkout
-      # - add_ssh_keys:
-      #     fingerprints: ["41:3c:ed:36:11:f5:13:b0:a2:e9:3b:47:3c:e6:cd:20"]
-      # - run:
-      #     name: Install dependencies
-      #     command: |
-      #       apk add gzip openssh-client ansible
-      #       ansible-playbook -i inventory.txt main.yml
+      - add_ssh_keys:
+          fingerprints: ["3a:d3:c7:02:68:9d:89:6e:30:3f:70:af:3c:0d:b9:e4"]
+      - run:
+          name: Install dependencies
+          command: |
+            apk add gzip openssh-client ansible
       - attach_workspace:
           # Must be absolute path or relative path from working_directory
           at: .
@@ -47,6 +47,10 @@ jobs:
           name: Reading Inventory file
           command: |
             cat inventory.txt
+      - run:
+          name: Configure Infrastructure
+          command: |
+            ansible-playbook -i inventory.txt main.yml
       # - run:
       #     name: Install dependencies
       #     command: |
