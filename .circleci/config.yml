@@ -11,8 +11,6 @@ jobs:
       - run:
           name: Configure server
           command: |
-            pwd
-            ls
             aws cloudformation deploy --template-file ec2.yml --stack-name web --region us-east-1
       - run:
           name: Configure server
@@ -27,6 +25,35 @@ jobs:
           # Must be relative path from root
           paths:
             - inventory.txt
+
+
+  server-configuration:
+    docker:
+      - image: python:3.7-alpine3.11
+
+    steps:
+      - checkout
+      # - add_ssh_keys:
+      #     fingerprints: ["41:3c:ed:36:11:f5:13:b0:a2:e9:3b:47:3c:e6:cd:20"]
+      # - run:
+      #     name: Install dependencies
+      #     command: |
+      #       apk add gzip openssh-client ansible
+      #       ansible-playbook -i inventory.txt main.yml
+      - attach_workspace:
+          # Must be absolute path or relative path from working_directory
+          at: .
+      - run:
+          name: Reading Inventory file
+          command: |
+            cat inventory.txt
+      # - run:
+      #     name: Install dependencies
+      #     command: |
+      #       apk add --update openssh-client ansible 
+# 
+            # aws ec2 describe-instances --region us-east-1 --query 'Reservations[*].Instances[*].PublicIpAddress' --output text >> inventory.txt
+            # ansible-playbook -i inventory.txt main.yml
 
 workflows:
   welcome:
