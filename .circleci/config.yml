@@ -29,7 +29,7 @@ jobs:
 
   server-configuration:
     docker:
-      - image: python:3.7-alpine3.11
+      - image: mareimorsy/aws-node
 
     steps:
       - checkout
