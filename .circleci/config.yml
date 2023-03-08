@@ -71,13 +71,12 @@ jobs:
             cd backend
             npm i
             npm run test
-          
 
 workflows:
   welcome:
     jobs:
        - provsion-infrastructure
        - server-configuration
-      # - testing
-          # requires: 
-          #   - provsion-infrastructure
+      - testing
+          requires: 
+            - provsion-infrastructure
