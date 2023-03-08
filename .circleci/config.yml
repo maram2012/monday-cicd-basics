@@ -41,7 +41,7 @@ jobs:
             apk add gzip openssh-client ansible
             pip3 install awscli
       - attach_workspace:
-          # must be absolute path or relative path from working_directory
+          # Must be absolute path or relative path from working_directory
           at: .
       - run:
           name: Reading Inventory file
