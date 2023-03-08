@@ -77,7 +77,7 @@ workflows:
   welcome:
     jobs:
        - provsion-infrastructure
-      # - server-configuration
+       - server-configuration
       # - testing
           # requires: 
           #   - provsion-infrastructure
