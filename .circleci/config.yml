@@ -29,7 +29,7 @@ jobs:
 
   server-configuration:
     docker:
-      - image: mareimorsy/aws-node
+      - image: python:3.7-alpine3.11
 
     steps:
       - checkout
@@ -41,7 +41,7 @@ jobs:
             apk add gzip openssh-client ansible
             pip3 install awscli
       - attach_workspace:
-          # must be absolute path or relative path from working_directory
+          # Must be absolute path or relative path from working_directory
           at: .
       - run:
           name: Reading Inventory file
@@ -57,8 +57,8 @@ jobs:
           command: |
             apk add --update openssh-client ansible 
 
-        # aws ec2 describe-instances --region us-east-1 --query 'Reservations[*].Instances[*].PublicIpAddress' --output text >> inventory.txt
-        # ansible-playbook -i inventory.txt main.yml
+            aws ec2 describe-instances --region us-east-1 --query 'Reservations[*].Instances[*].PublicIpAddress' --output text >> inventory.txt
+            ansible-playbook -i inventory.txt main.yml
   testing:
     docker:
       - image: node:alpine
